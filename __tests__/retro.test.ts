@@ -2,7 +2,8 @@ import {nextDate, newDate, nextDriver, tryCreateRetro} from '../src/retro'
 import * as api from '../src/api'
 import * as github from '@actions/github'
 import * as mockdate from 'mockdate'
-import {defaultColumnNames} from '../src/defaults'
+import {defaultColumnNames, defaultTitleTemplate} from '../src/defaults'
+import dateFormat from 'date-format'
 
 jest.mock('../src/api')
 
@@ -49,7 +50,8 @@ describe('test tryCreateRetro', () => {
       issueTemplate: '',
       columns: [],
       cards: '',
-      onlyLog: false
+      onlyLog: false,
+      dateFormat: '',
     })
 
     expect(findLatestRetroMock).toHaveBeenCalledTimes(1)
@@ -106,7 +108,8 @@ describe('test tryCreateRetro', () => {
       issueTemplate: '',
       columns: [],
       cards: '',
-      onlyLog: false
+      onlyLog: false,
+      dateFormat: '',
     })
 
     expect(findLatestRetroMock).toHaveBeenCalledTimes(1)
@@ -166,7 +169,8 @@ describe('test tryCreateRetro', () => {
       issueTemplate: '',
       columns: [],
       cards: '',
-      onlyLog: false
+      onlyLog: false,
+      dateFormat: '',
     })
 
     expect(findLatestRetroMock).toHaveBeenCalledTimes(1)
@@ -206,7 +210,8 @@ describe('test tryCreateRetro', () => {
       issueTemplate: '',
       columns: [],
       cards: '',
-      onlyLog: true
+      onlyLog: true,
+      dateFormat: ''
     })
 
     expect(findLatestRetroMock).toHaveBeenCalledTimes(1)
@@ -260,7 +265,8 @@ describe('test tryCreateRetro', () => {
       issueTemplate: '',
       columns: [],
       cards: '',
-      onlyLog: false
+      onlyLog: false,
+      dateFormat: ''
     })
 
     expect(findLatestRetroMock).toHaveBeenCalledTimes(2)
@@ -290,13 +296,13 @@ describe('test tryCreateRetro', () => {
     expect(closeIssueMock).toHaveBeenCalledWith(client, 1, false)
   })
 
-  test('create issue', async () => {
+  test('create issue euro format', async () => {
     await tryCreateRetro(client, {
       teamName: 'Test Team',
       handles: ['alice', 'bob'],
       retroCadenceInWeeks: 2,
       retroDayOfWeek: 3,
-      titleTemplate: 'Test Title',
+      titleTemplate: defaultTitleTemplate,
       notificationUrl: 'https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX',
       notificationTemplate: '',
       closeAfterDays: 0,
@@ -304,20 +310,16 @@ describe('test tryCreateRetro', () => {
       issueTemplate: '',
       columns: [],
       cards: '',
-      onlyLog: true
+      onlyLog: true,
+      dateFormat: 'dd/MM/yyyy'
     })
 
-    expect(findLatestRetroMock).toHaveBeenCalledTimes(1)
-    expect(createBoardMock).toHaveBeenCalledTimes(1)
-    expect(createIssueMock).toHaveBeenCalledTimes(1)
-    expect(sendNotificationMock).toHaveBeenCalledTimes(0)
-    expect(updateBoardDescriptionMock).toHaveBeenCalledTimes(1)
-    expect(closeBoardMock).toHaveBeenCalledTimes(0)
-    expect(closeIssueMock).toHaveBeenCalledTimes(0)
-
+    const upcomingDate = new Date()
+    upcomingDate.setDate(upcomingDate.getDate()+15)
+    const expectedDate = dateFormat('dd/MM/yyyy', upcomingDate)
     expect(createBoardMock).toHaveBeenCalledWith(
       client,
-      'Test Title',
+      `Test Team Retro on ${expectedDate}`,
       {
         team: 'Test Team',
         date: expect.any(Date),
@@ -332,7 +334,67 @@ describe('test tryCreateRetro', () => {
 
     expect(createIssueMock).toHaveBeenCalledWith(
       client,
-      'Test Title',
+      `Test Team Retro on ${expectedDate}`,
+      {
+        team: 'Test Team',
+        date: expect.any(Date),
+        driver: 'alice',
+        offset: 0
+      },
+      '',
+      expect.anything(),
+      true
+    )
+  })
+
+  test('create issue', async () => {
+
+    await tryCreateRetro(client, {
+      teamName: 'Test Team',
+      handles: ['alice', 'bob'],
+      retroCadenceInWeeks: 2,
+      retroDayOfWeek: 3,
+      titleTemplate: defaultTitleTemplate,
+      notificationUrl: 'https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX',
+      notificationTemplate: '',
+      closeAfterDays: 0,
+      createTrackingIssue: true,
+      issueTemplate: '',
+      columns: [],
+      cards: '',
+      onlyLog: true,
+      dateFormat: 'yyyy-MM-dd'
+    })
+
+    expect(findLatestRetroMock).toHaveBeenCalledTimes(1)
+    expect(createBoardMock).toHaveBeenCalledTimes(1)
+    expect(createIssueMock).toHaveBeenCalledTimes(1)
+    expect(sendNotificationMock).toHaveBeenCalledTimes(0)
+    expect(updateBoardDescriptionMock).toHaveBeenCalledTimes(1)
+    expect(closeBoardMock).toHaveBeenCalledTimes(0)
+    expect(closeIssueMock).toHaveBeenCalledTimes(0)
+
+    const upcomingDate = new Date()
+    upcomingDate.setDate(upcomingDate.getDate()+15)
+    const expectedDate = dateFormat('yyyy-MM-dd', upcomingDate)
+    expect(createBoardMock).toHaveBeenCalledWith(
+      client,
+      `Test Team Retro on ${expectedDate}`,
+      {
+        team: 'Test Team',
+        date: expect.any(Date),
+        driver: 'alice',
+        offset: 0
+      },
+      [],
+      '',
+      expect.anything(),
+      true
+    )
+
+    expect(createIssueMock).toHaveBeenCalledWith(
+      client,
+      `Test Team Retro on ${expectedDate}`,
       {
         team: 'Test Team',
         date: expect.any(Date),
