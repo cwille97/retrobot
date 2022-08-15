@@ -83,7 +83,7 @@ jobs:
 | `columns`               | Comma separated list of column names. If not specified, defaults to `"Went well", "Went meh", "Could have gone better", Action items!"`. |
 | `cards`                 | Custom cards added to the project board.  This is input as a multiline string, where each line represents a card.  The format of a card is `<note> => <column_name>`.  See the [advanced example](#advanced-example) for a sample. |
 | `only-log` | Log what actions would be performed, but do not actually create the retro board, issue, or notifications.  Useful for testing. |
-| `date-format` | Provide a format to use for outputting dates, based on options available in the [dateformat npm package](https://www.npmjs.com/package/dateformat). |
+| `date-format` | Provide a format to use for outputting dates, based on options available in the [date-format npm package](https://www.npmjs.com/package/date-format). |
 
 ## Template rendering
 
