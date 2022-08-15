@@ -47,6 +47,10 @@ inputs:
     description: 'Run in text output only mode. Do not actually create a retro board/issue.'
     required: false
     default: false
+  date-format:
+    description: 'Provide a format to use for outputting dates, based on options available in the dateformat npm package.'
+    required: false
+    default: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
