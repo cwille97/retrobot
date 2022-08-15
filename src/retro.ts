@@ -2,6 +2,7 @@ import * as core from '@actions/core'
 import * as github from '@actions/github'
 import * as mustache from 'mustache'
 import {IRetroArguments, IRetroInfo, IRetro} from './types'
+import dateFormat from 'date-format'
 import {
   findLatestRetro,
   createBoard,
@@ -97,7 +98,7 @@ export async function tryCreateRetro(client: github.GitHub, args: IRetroArgument
     issue: undefined
   }
 
-  const view = createView(newRetro, lastRetro, futureRetroDriver)
+  const view = createView(newRetro, lastRetro, futureRetroDriver, args)
 
   const title = createTitle(args.titleTemplate, view)
   view['title'] = title
@@ -180,16 +181,12 @@ export function nextDate(lastRetroDate: Date, retroDayOfWeek: number, retroCaden
 }
 
 /**
- * Converts the given date into a human readable string in the form DD-MM-YYYY.
+ * Converts the given date into a human readable string in the specified date format.
  *
  * @param date the date
  */
-function toReadableDate(date: Date): string {
-  return date.toLocaleDateString('en-US', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
-  })
+function toReadableDate(date: Date, args: IRetroArguments): string {
+  return dateFormat(args.dateFormat, date)
 }
 
 /**
@@ -212,9 +209,9 @@ function createTitle(template: string, view: any): string {
  * @param futureDriver the GitHub handle of the next retro driver
  */
 /* eslint-disable @typescript-eslint/promise-function-async */
-function createView(retroInfo: IRetroInfo, lastRetro: IRetro | undefined, futureDriver: string): any {
+function createView(retroInfo: IRetroInfo, lastRetro: IRetro | undefined, futureDriver: string, args: IRetroArguments): any {
   const view: any = {
-    date: toReadableDate(retroInfo.date),
+    date: toReadableDate(retroInfo.date, args),
     driver: retroInfo.driver,
     team: retroInfo.team,
     'next-driver': futureDriver
@@ -223,7 +220,7 @@ function createView(retroInfo: IRetroInfo, lastRetro: IRetro | undefined, future
   if (lastRetro) {
     view['last-retro'] = {
       title: lastRetro.title,
-      date: toReadableDate(lastRetro.date),
+      date: toReadableDate(lastRetro.date, args),
       driver: lastRetro.driver,
       url: lastRetro.url
     }
