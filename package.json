@@ -28,16 +28,16 @@
     "@actions/core": "^1.2.4",
     "@actions/github": "^2.2.0",
     "@octokit/rest": "^16.43.1",
-    "@types/mustache": "^4.0.1",
-    "axios": "^0.20.0",
+    "axios": "^1.2.1",
     "babel-jest": "^29.3.1",
     "date-format": "^4.0.13",
-    "mustache": "^4.0.1"
+    "mustache": "^4.2.0"
   },
   "devDependencies": {
     "@tsconfig/node16": "^1.0.3",
     "@types/jest": "^29.2.4",
     "@types/node": "^16.18.9",
+    "@types/mustache": "^4.0.1",
     "@typescript-eslint/eslint-plugin": "^5.46.1",
     "@typescript-eslint/parser": "^5.46.1",
     "@vercel/ncc": "^0.36.0",
