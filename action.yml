@@ -18,7 +18,7 @@ inputs:
   retro-day-of-week:
     description: 'The day of the week to schedule a retro on. Default is Friday.'
     required: false
-    default: 5 # Thursday
+    default: 5 # Friday
   title-template:
     description: 'Template used to generate the retro title. Can use {{ mustache }} inputs to render variables.'
     required: false
