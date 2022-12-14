@@ -20,6 +20,8 @@ describe('test tryCreateRetro', () => {
 
   beforeEach(() => {
     jest.resetAllMocks()
+    mockdate.reset()
+    mockdate.set('2020-09-15T08:00:00.000Z')
 
     createBoardMock.mockImplementation((client, title, retroInfo, columnNames, cards, view, onlyLog) => {
       return Promise.resolve({
@@ -314,12 +316,9 @@ describe('test tryCreateRetro', () => {
       dateFormat: 'dd/MM/yyyy'
     })
 
-    const upcomingDate = new Date()
-    upcomingDate.setDate(upcomingDate.getDate() + 15)
-    const expectedDate = dateFormat('dd/MM/yyyy', upcomingDate)
     expect(createBoardMock).toHaveBeenCalledWith(
       client,
-      `Test Team Retro on ${expectedDate}`,
+      'Test Team Retro on 30/09/2020',
       {
         team: 'Test Team',
         date: expect.any(Date),
@@ -334,7 +333,7 @@ describe('test tryCreateRetro', () => {
 
     expect(createIssueMock).toHaveBeenCalledWith(
       client,
-      `Test Team Retro on ${expectedDate}`,
+      'Test Team Retro on 30/09/2020',
       {
         team: 'Test Team',
         date: expect.any(Date),
@@ -373,12 +372,9 @@ describe('test tryCreateRetro', () => {
     expect(closeBoardMock).toHaveBeenCalledTimes(0)
     expect(closeIssueMock).toHaveBeenCalledTimes(0)
 
-    const upcomingDate = new Date()
-    upcomingDate.setDate(upcomingDate.getDate() + 15)
-    const expectedDate = dateFormat('yyyy-MM-dd', upcomingDate)
     expect(createBoardMock).toHaveBeenCalledWith(
       client,
-      `Test Team Retro on ${expectedDate}`,
+      'Test Team Retro on 2020-09-30',
       {
         team: 'Test Team',
         date: expect.any(Date),
@@ -393,7 +389,7 @@ describe('test tryCreateRetro', () => {
 
     expect(createIssueMock).toHaveBeenCalledWith(
       client,
-      `Test Team Retro on ${expectedDate}`,
+      'Test Team Retro on 2020-09-30',
       {
         team: 'Test Team',
         date: expect.any(Date),
