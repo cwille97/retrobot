@@ -1,6 +1,5 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import {Octokit} from '@octokit/rest'
 import {default as axios} from 'axios'
 import * as mustache from 'mustache'
 import {IRetro, IRetroInfo, IProjectBoard, IIssue} from './types'
@@ -60,7 +59,7 @@ export async function findLatestRetro(
 ): Promise<IRetro | undefined> {
   core.info('Locating the last retro...')
 
-  const parseRetro = (proj: Octokit.ProjectsListForRepoResponseItem): IRetro => {
+  const parseRetro = (proj: any): IRetro => {
     const info = parseProjectDescription(proj.body)
 
     return {
@@ -85,12 +84,12 @@ export async function findLatestRetro(
       state: 'all'
     })
   )) {
-    const response = result.data as Octokit.ProjectsListForRepoResponse
+    const response: any[] = result.data
 
     if (response) {
       core.info(`Loading page containing ${response.length} projects`)
 
-      for (const retro of response.filter(proj => proj.body.startsWith(bodyPrefix)).map(proj => parseRetro(proj))) {
+      for (const retro of response.filter(proj => proj.body.startsWith(bodyPrefix)).map(parseRetro)) {
         retros.push(retro)
       }
     } else {
