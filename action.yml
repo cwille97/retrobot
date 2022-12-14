@@ -52,5 +52,5 @@ inputs:
     required: false
     default: false
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: 'node16'
+  main: 'dist/main.js'
