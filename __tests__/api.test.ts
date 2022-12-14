@@ -281,9 +281,7 @@ describe('test populateCards', () => {
   })
 
   test('rendered text', async () => {
-    const scope = nock('https://api.github.com')
-      .post('/projects/columns/1/cards', {note: 'foo'})
-      .reply(200)
+    const scope = nock('https://api.github.com').post('/projects/columns/1/cards', {note: 'foo'}).reply(200)
 
     await populateCards(client, '{{ text }} => column1', {text: 'foo'}, {column1: 1}, false)
     scope.done()

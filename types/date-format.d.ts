@@ -1,1 +1,1 @@
-declare module "date-format"
+declare module 'date-format'

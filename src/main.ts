@@ -25,13 +25,13 @@ async function run(): Promise<void> {
       columns: getList('columns'),
       cards: getString('cards'),
       onlyLog: getBoolean('only-log'),
-      dateFormat: getString('date-format', {default: 'dd-mm-yyyy'})
+      dateFormat: getString('date-format', {default: 'dd-MM-yyyy'})
     }
 
     core.info('Arguments parsed. Starting creation.')
 
     await tryCreateRetro(client, args)
-  } catch (error) {
+  } catch (error: any) {
     core.setFailed(error.message)
   }
 }

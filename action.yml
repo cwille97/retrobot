@@ -18,7 +18,7 @@ inputs:
   retro-day-of-week:
     description: 'The day of the week to schedule a retro on. Default is Friday.'
     required: false
-    default: 5
+    default: 5 # Friday
   title-template:
     description: 'Template used to generate the retro title. Can use {{ mustache }} inputs to render variables.'
     required: false
@@ -50,7 +50,7 @@ inputs:
   date-format:
     description: 'Provide a format to use for outputting dates, based on options available in the dateformat npm package.'
     required: false
-    default: false
+    default: 'dd-MM-yyyy'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'

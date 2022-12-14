@@ -125,7 +125,7 @@ export async function tryCreateRetro(client: github.GitHub, args: IRetroArgument
  * @param lastDriver the GitHub handle of the last retro driver, or '' if no previous retros found
  * @param lastOffset the offset of the last retro driver
  */
-export function nextDriver(handles: string[], lastDriver: string, lastOffset: number = 0): string {
+export function nextDriver(handles: string[], lastDriver: string, lastOffset = 0): string {
   if (lastDriver) {
     let pos = handles.indexOf(lastDriver)
 
@@ -146,7 +146,7 @@ export function nextDriver(handles: string[], lastDriver: string, lastOffset: nu
  * @param offsetDays when set, specifies the number of days to offset from today
  * @param atMidnight when true, the time will be set to midnight
  */
-export function newDate(offsetDays: number = 0, atMidnight: boolean = false): Date {
+export function newDate(offsetDays = 0, atMidnight = false): Date {
   const date = new Date()
   date.setDate(date.getDate() + offsetDays)
 
@@ -209,7 +209,12 @@ function createTitle(template: string, view: any): string {
  * @param futureDriver the GitHub handle of the next retro driver
  */
 /* eslint-disable @typescript-eslint/promise-function-async */
-function createView(retroInfo: IRetroInfo, lastRetro: IRetro | undefined, futureDriver: string, args: IRetroArguments): any {
+function createView(
+  retroInfo: IRetroInfo,
+  lastRetro: IRetro | undefined,
+  futureDriver: string,
+  args: IRetroArguments
+): any {
   const view: any = {
     date: toReadableDate(retroInfo.date, args),
     driver: retroInfo.driver,
