@@ -1,8 +1,7 @@
 {
   "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
-    "outFile": "dist/main.js",
-    "module": "AMD",
+    "module": "CommonJS",
     "moduleResolution": "node"
   },
   "include": [
