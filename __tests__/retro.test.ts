@@ -51,7 +51,7 @@ describe('test tryCreateRetro', () => {
       columns: [],
       cards: '',
       onlyLog: false,
-      dateFormat: '',
+      dateFormat: ''
     })
 
     expect(findLatestRetroMock).toHaveBeenCalledTimes(1)
@@ -109,7 +109,7 @@ describe('test tryCreateRetro', () => {
       columns: [],
       cards: '',
       onlyLog: false,
-      dateFormat: '',
+      dateFormat: ''
     })
 
     expect(findLatestRetroMock).toHaveBeenCalledTimes(1)
@@ -170,7 +170,7 @@ describe('test tryCreateRetro', () => {
       columns: [],
       cards: '',
       onlyLog: false,
-      dateFormat: '',
+      dateFormat: ''
     })
 
     expect(findLatestRetroMock).toHaveBeenCalledTimes(1)
@@ -315,7 +315,7 @@ describe('test tryCreateRetro', () => {
     })
 
     const upcomingDate = new Date()
-    upcomingDate.setDate(upcomingDate.getDate()+15)
+    upcomingDate.setDate(upcomingDate.getDate() + 15)
     const expectedDate = dateFormat('dd/MM/yyyy', upcomingDate)
     expect(createBoardMock).toHaveBeenCalledWith(
       client,
@@ -348,7 +348,6 @@ describe('test tryCreateRetro', () => {
   })
 
   test('create issue', async () => {
-
     await tryCreateRetro(client, {
       teamName: 'Test Team',
       handles: ['alice', 'bob'],
@@ -375,7 +374,7 @@ describe('test tryCreateRetro', () => {
     expect(closeIssueMock).toHaveBeenCalledTimes(0)
 
     const upcomingDate = new Date()
-    upcomingDate.setDate(upcomingDate.getDate()+15)
+    upcomingDate.setDate(upcomingDate.getDate() + 15)
     const expectedDate = dateFormat('yyyy-MM-dd', upcomingDate)
     expect(createBoardMock).toHaveBeenCalledWith(
       client,

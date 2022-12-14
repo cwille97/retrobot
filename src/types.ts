@@ -11,7 +11,7 @@ export interface IRetroArguments {
   issueTemplate: string
   columns: string[]
   cards: string
-  onlyLog: boolean,
+  onlyLog: boolean
   dateFormat: string
 }
 

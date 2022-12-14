@@ -209,7 +209,12 @@ function createTitle(template: string, view: any): string {
  * @param futureDriver the GitHub handle of the next retro driver
  */
 /* eslint-disable @typescript-eslint/promise-function-async */
-function createView(retroInfo: IRetroInfo, lastRetro: IRetro | undefined, futureDriver: string, args: IRetroArguments): any {
+function createView(
+  retroInfo: IRetroInfo,
+  lastRetro: IRetro | undefined,
+  futureDriver: string,
+  args: IRetroArguments
+): any {
   const view: any = {
     date: toReadableDate(retroInfo.date, args),
     driver: retroInfo.driver,

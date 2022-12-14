@@ -31,7 +31,7 @@ async function run(): Promise<void> {
     core.info('Arguments parsed. Starting creation.')
 
     await tryCreateRetro(client, args)
-  } catch (error: any) {
+  } catch (error) {
     core.setFailed(error.message)
   }
 }
